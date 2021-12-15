@@ -37,7 +37,7 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 [1, 2, 3, 4, 5]
 ```
 
-## 关键函数
+## 关键函数key
 
 [`list.sort()`](https://docs.python.org/zh-cn/3/library/stdtypes.html#list.sort) 和 [`sorted()`](https://docs.python.org/zh-cn/3/library/functions.html#sorted) 都有一个 *key* 形参用来指定在进行比较前要在每个列表元素上调用的函数（或其他可调用对象）。
 

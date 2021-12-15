@@ -94,9 +94,11 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 * 正数从小到大
 * 负数从大到小
 ```python
-lst = [1, -2, 3, 0, -1, 2, -3]
-sorted_lst = sorted(lst, key=lambda x: x < 0)
-print(sorted_lst)
+>>> lst = [1, -2, 3, 0, -1, 2, -3]
+>>> sorted_lst = sorted(lst, key=lambda x: (x < 0, abs(x)))
+>>> print(sorted_lst)
+[0, 1, 2, 3, -1, -2, -3]
+
 ```
 上述代码分为两部分，第一部分的`key=lambda x: x < 0`意为：当x < 0时，返回的key为False，其bool值为0，反之为1，因此上述lst的全部key如下方左侧所示，其中返回False的在返回Ture前面，即最终排序将变成下方右侧形式：
 ```

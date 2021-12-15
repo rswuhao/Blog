@@ -8,8 +8,6 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 
 简单的升序排序非常简单：只需调用 [`sorted()`](https://docs.python.org/zh-cn/3/library/functions.html#sorted) 函数。它返回一个新的排序后列表：
 
-\>>>
-
 ```python
 >>> sorted([5, 2, 3, 1, 4])
 [1, 2, 3, 4, 5]
@@ -19,8 +17,6 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 
 **注意：** Python3 中，dict的三种方法为items()，keys()和values()，这些函数返回的都不是列表，虽然支持for循环，但不支持索引[参考1](https://blog.csdn.net/shenquanyue/article/details/79995632)，因此dict类型不支持`dict.sort()`排序
 
-\>>>
-
 ```python
 >>> a = [5, 2, 3, 1, 4]
 >>> a.sort()
@@ -29,8 +25,6 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 ```
 
 另外一个区别是， [`list.sort()`](https://docs.python.org/zh-cn/3/library/stdtypes.html#list.sort) 方法只是为列表定义的，而 [`sorted()`](https://docs.python.org/zh-cn/3/library/functions.html#sorted) 函数可以接受任何可迭代对象。
-
-\>>>
 
 ```python
 >>> sorted({1: 'D', 2: 'B', 3: 'B', 4: 'E', 5: 'A'})
@@ -43,8 +37,6 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 
 例如，下面是一个不区分大小写的字符串比较：
 
-\>>>
-
 ```python
 >>> sorted("This is a test string from Andrew".split(), key=str.lower)
 ['a', 'Andrew', 'from', 'is', 'string', 'test', 'This']
@@ -53,8 +45,6 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 *key* 形参的值应该是个函数（或其他可调用对象），它接受一个参数并返回一个用于排序的键。 这种机制速度很快，因为对于每个输入记录只会调用一次键函数。
 
 一种常见的模式是使用对象的一些索引作为键对复杂对象进行排序。例如：
-
-\>>>
 
 ```python
 >>> student_tuples = [
@@ -67,8 +57,6 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 ```
 
 同样的技术也适用于具有命名属性的对象。例如：
-
-\>>>
 
 ```python
 >>> class Student:
@@ -122,45 +110,40 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 
 使用这些函数，上述示例变得更简单，更快捷：
 
-\>>>
-
 ```python
->>> from operator import itemgetter, attrgetter>>> sorted(student_tuples, key=itemgetter(2))[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]>>> sorted(student_objects, key=attrgetter('age'))[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
+>>> from operator import itemgetter, attrgetter
+>>> sorted(student_tuples, key=itemgetter(2))[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
+>>> sorted(student_objects, key=attrgetter('age'))[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
 ```
 
 Operator 模块功能允许多级排序。 例如，按 *grade* 排序，然后按 *age* 排序：
 
-\>>>
-
 ```python
->>> sorted(student_tuples, key=itemgetter(1,2))[('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]>>> sorted(student_objects, key=attrgetter('grade', 'age'))[('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]
+>>> sorted(student_tuples, key=itemgetter(1,2))[('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]
+>>> sorted(student_objects, key=attrgetter('grade', 'age'))[('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]
 ```
 
 ## 升序和降序
 
 [`list.sort()`](https://docs.python.org/zh-cn/3/library/stdtypes.html#list.sort) 和 [`sorted()`](https://docs.python.org/zh-cn/3/library/functions.html#sorted) 接受布尔值的 *reverse* 参数。这用于标记降序排序。 例如，要以反向 *age* 顺序获取学生数据：
 
-\>>>
-
 ```
->>> sorted(student_tuples, key=itemgetter(2), reverse=True)[('john', 'A', 15), ('jane', 'B', 12), ('dave', 'B', 10)]>>> sorted(student_objects, key=attrgetter('age'), reverse=True)[('john', 'A', 15), ('jane', 'B', 12), ('dave', 'B', 10)]
+>>> sorted(student_tuples, key=itemgetter(2), reverse=True)[('john', 'A', 15), ('jane', 'B', 12), ('dave', 'B', 10)]
+>>> sorted(student_objects, key=attrgetter('age'), reverse=True)[('john', 'A', 15), ('jane', 'B', 12), ('dave', 'B', 10)]
 ```
 
 ## 排序稳定性和排序复杂度
 
 排序保证是 [稳定](https://en.wikipedia.org/wiki/Sorting_algorithm#Stability) 的。 这意味着当多个记录具有相同的键值时，将保留其原始顺序。
 
-\>>>
-
 ```python
->>> data = [('red', 1), ('blue', 1), ('red', 2), ('blue', 2)]>>> sorted(data, key=itemgetter(0))[('blue', 1), ('blue', 2), ('red', 1), ('red', 2)]
+>>> data = [('red', 1), ('blue', 1), ('red', 2), ('blue', 2)]
+>>> sorted(data, key=itemgetter(0))[('blue', 1), ('blue', 2), ('red', 1), ('red', 2)]
 ```
 
 注意 *blue* 的两个记录如何保留它们的原始顺序，以便 `('blue', 1)` 保证在 `('blue', 2)` 之前。
 
 这个美妙的属性允许你在一系列排序步骤中构建复杂的排序。例如，要按 *grade* 降序然后 *age* 升序对学生数据进行排序，请先 *age* 排序，然后再使用 *grade* 排序：
-
-\>>>
 
 ```python
 >>> s = sorted(student_objects, key=attrgetter('age'))     # sort on secondary key
@@ -169,8 +152,6 @@ Operator 模块功能允许多级排序。 例如，按 *grade* 排序，然后�
 ```
 
 这可以被抽象为一个包装函数，该函数能接受一个列表以及字段和顺序的元组，以对它们进行多重排序。
-
-\>>>
 
 ```python
 >>> def multisort(xs, specs):
@@ -220,8 +201,6 @@ Python 中使用的 [Timsort](https://en.wikipedia.org/wiki/Timsort) 算法可�
 
 在 Py2.x 中， sort 允许一个可选函数，可以调用它来进行比较。该函数应该采用两个参数进行比较，然后返回负值为小于，如果它们相等则返回零，或者返回大于大于的正值。例如，我们可以这样做：
 
-\>>>
-
 ```python
 >>> def numeric_compare(x, y):
 ...     return x - y
@@ -230,8 +209,6 @@ Python 中使用的 [Timsort](https://en.wikipedia.org/wiki/Timsort) 算法可�
 ```
 
 或者你可反转比较的顺序：
-
-\>>>
 
 ```python
 >>> def reverse_numeric(x, y):
@@ -265,8 +242,6 @@ def cmp_to_key(mycmp):
 
 要转换为键函数，只需包装旧的比较函数：
 
-\>>>
-
 ```python
 >>> sorted([5, 2, 4, 1, 3], key=cmp_to_key(reverse_numeric))
 [5, 4, 3, 2, 1]
@@ -280,34 +255,29 @@ def cmp_to_key(mycmp):
 
 - *reverse* 参数仍然保持排序稳定性（因此具有相等键的记录保留原始顺序）。 有趣的是，通过使用内置的 [`reversed()`](https://docs.python.org/zh-cn/3/library/functions.html#reversed) 函数两次，可以在没有参数的情况下模拟该效果：
 
-  \>>>
-
-  ```python
-  >>> data = [('red', 1), ('blue', 1), ('red', 2), ('blue', 2)]
-  >>> standard_way = sorted(data, key=itemgetter(0), reverse=True)
-  >>> double_reversed = list(reversed(sorted(reversed(data), key=itemgetter(0))))
-  >>> assert standard_way == double_reversed
-  >>> standard_way
-  [('red', 1), ('red', 2), ('blue', 1), ('blue', 2)]
-  ```
+```python
+>>> data = [('red', 1), ('blue', 1), ('red', 2), ('blue', 2)]
+>>> standard_way = sorted(data, key=itemgetter(0), reverse=True)
+>>> double_reversed = list(reversed(sorted(reversed(data), key=itemgetter(0))))
+>>> assert standard_way == double_reversed
+>>> standard_way
+[('red', 1), ('red', 2), ('blue', 1), ('blue', 2)]
+```
 
 - 当在两个对象之间进行比较时，会确保排序例程使用 `__lt__()`。 因此，通过定义 `__lt__()` 方法可以很容易地为类添加一个标准排序:
 
-  \>>>
 
-  ```python
-  >>> Student.__lt__ = lambda self, other: self.age < other.age
-  >>> sorted(student_objects)
-  [('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
-  ```
+```python
+>>> Student.__lt__ = lambda self, other: self.age < other.age
+>>> sorted(student_objects)
+[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
+```
 
 - 键函数不需要直接依赖于被排序的对象。键函数还可以访问外部资源。例如，如果学生成绩存储在字典中，则可以使用它们对单独的学生姓名列表进行排序：
 
-  \>>>
-
-  ```python
-  >>> students = ['dave', 'john', 'jane']
-  >>> newgrades = {'john': 'F', 'jane':'A', 'dave': 'C'}
-  >>> sorted(students, key=newgrades.__getitem__)
-  ['jane', 'dave', 'john']
-  ```
+```python
+>>> students = ['dave', 'john', 'jane']
+>>> newgrades = {'john': 'F', 'jane':'A', 'dave': 'C'}
+>>> sorted(students, key=newgrades.__getitem__)
+['jane', 'dave', 'john']
+```

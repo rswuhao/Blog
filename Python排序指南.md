@@ -10,7 +10,7 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 
 \>>>
 
-```
+```python
 >>> sorted([5, 2, 3, 1, 4])
 [1, 2, 3, 4, 5]
 ```
@@ -21,7 +21,7 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 
 \>>>
 
-```
+```python
 >>> a = [5, 2, 3, 1, 4]
 >>> a.sort()
 >>> a
@@ -32,7 +32,7 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 
 \>>>
 
-```
+```python
 >>> sorted({1: 'D', 2: 'B', 3: 'B', 4: 'E', 5: 'A'})
 [1, 2, 3, 4, 5]
 ```
@@ -45,7 +45,7 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 
 \>>>
 
-```
+```python
 >>> sorted("This is a test string from Andrew".split(), key=str.lower)
 ['a', 'Andrew', 'from', 'is', 'string', 'test', 'This']
 ```
@@ -56,7 +56,7 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 
 \>>>
 
-```
+```python
 >>> student_tuples = [
 ...     ('john', 'A', 15),
 ...     ('jane', 'B', 12),
@@ -70,7 +70,7 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 
 \>>>
 
-```
+```python
 >>> class Student:
 ...     def __init__(self, name, grade, age):
 ...         self.name = name
@@ -88,6 +88,26 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 [('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
 ```
 
+**下面这个例子能更加直观的表现出使用key关键字的在sorted函数中的应用：**
+对一个数列排序，要求如下：
+* 正数在前，负数在后
+* 正数从小到大
+* 负数从大到小
+```python
+lst = [1, -2, 3, 0, -1, 2, -3]
+sorted_lst = sorted(lst, key=lambda x: x < 0)
+print(sorted_lst)
+```
+上述代码分为两部分，第一部分的`key=lambda x: x < 0`意为：当x < 0时，返回的key为False，其bool值为0，反之为1，因此上述lst的全部key如下方左侧所示，其中返回False的在返回Ture前面，即最终排序将变成下方右侧形式：
+
+`[1, -2, 3, 0, -1, 2, -3]`  `[1, 3, 0, 2, -2, -1, -3]`
+`[0   1  0  0   1  0   1]`  `[0  0  0  0   1   1   1]`
+
+第二部分的`abs(x)`意为：返回绝对值，按照绝对值顺序排队，从而排序完成：：
+
+`[1, 3, 0, 2, -2, -1, -3]`  `[0, 1, 2, 3, -1, -2, -3]`
+`[1  3  0  2   2   1   3]`  `[0  1  2  3   1   2   3]`
+
 ## Operator 模块函数
 
 上面显示的键函数模式非常常见，因此 Python 提供了便利功能，使访问器功能更容易，更快捷。  [`operator`](https://docs.python.org/zh-cn/3/library/operator.html#module-operator) 模块有 [`itemgetter()`](https://docs.python.org/zh-cn/3/library/operator.html#operator.itemgetter) 、 [`attrgetter()`](https://docs.python.org/zh-cn/3/library/operator.html#operator.attrgetter) 和 [`methodcaller()`](https://docs.python.org/zh-cn/3/library/operator.html#operator.methodcaller) 函数。
@@ -96,7 +116,7 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 
 \>>>
 
-```
+```python
 >>> from operator import itemgetter, attrgetter
 
 >>> sorted(student_tuples, key=itemgetter(2))
@@ -110,7 +130,7 @@ Operator 模块功能允许多级排序。 例如，按 *grade* 排序，然后�
 
 \>>>
 
-```
+```python
 >>> sorted(student_tuples, key=itemgetter(1,2))
 [('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]
 
@@ -138,7 +158,7 @@ Operator 模块功能允许多级排序。 例如，按 *grade* 排序，然后�
 
 \>>>
 
-```
+```python
 >>> data = [('red', 1), ('blue', 1), ('red', 2), ('blue', 2)]
 >>> sorted(data, key=itemgetter(0))
 [('blue', 1), ('blue', 2), ('red', 1), ('red', 2)]
@@ -150,7 +170,7 @@ Operator 模块功能允许多级排序。 例如，按 *grade* 排序，然后�
 
 \>>>
 
-```
+```python
 >>> s = sorted(student_objects, key=attrgetter('age'))     # sort on secondary key
 >>> sorted(s, key=attrgetter('grade'), reverse=True)       # now sort on primary key, descending
 [('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
@@ -160,7 +180,7 @@ Operator 模块功能允许多级排序。 例如，按 *grade* 排序，然后�
 
 \>>>
 
-```
+```python
 >>> def multisort(xs, specs):
 ...     for key, reverse in reversed(specs):
 ...         xs.sort(key=attrgetter(key), reverse=reverse)
@@ -184,7 +204,7 @@ Python 中使用的 [Timsort](https://en.wikipedia.org/wiki/Timsort) 算法可�
 
 \>>>
 
-```
+```python
 decorated = [(student.grade, i, student) for i, student in enumerate(student_objects)]
 decorated.sort()
 [student for grade, i, student in decorated]               # undecorate
@@ -212,7 +232,7 @@ decorated.sort()
 
 \>>>
 
-```
+```python
 >>> def numeric_compare(x, y):
 ...     return x - y
 >>> sorted([5, 2, 4, 1, 3], cmp=numeric_compare) 
@@ -223,7 +243,7 @@ decorated.sort()
 
 \>>>
 
-```
+```python
 >>> def reverse_numeric(x, y):
 ...     return y - x
 >>> sorted([5, 2, 4, 1, 3], cmp=reverse_numeric) 
@@ -232,7 +252,7 @@ decorated.sort()
 
 在将代码从 Python 2.x 移植到 3.x 时，如果让用户提供比较函数并且需要将其转换为键函数则会出现这种情况。 以下包装器使得做到这点变得很容易。
 
-```
+```python
 def cmp_to_key(mycmp):
     'Convert a cmp= function into a key= function'
     class K:
@@ -257,7 +277,7 @@ def cmp_to_key(mycmp):
 
 \>>>
 
-```
+```python
 >>> sorted([5, 2, 4, 1, 3], key=cmp_to_key(reverse_numeric))
 [5, 4, 3, 2, 1]
 ```
@@ -272,7 +292,7 @@ def cmp_to_key(mycmp):
 
   \>>>
 
-  ```
+  ```python
   >>> data = [('red', 1), ('blue', 1), ('red', 2), ('blue', 2)]
   >>> standard_way = sorted(data, key=itemgetter(0), reverse=True)
   >>> double_reversed = list(reversed(sorted(reversed(data), key=itemgetter(0))))
@@ -285,7 +305,7 @@ def cmp_to_key(mycmp):
 
   \>>>
 
-  ```
+  ```python
   >>> Student.__lt__ = lambda self, other: self.age < other.age
   >>> sorted(student_objects)
   [('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
@@ -295,7 +315,7 @@ def cmp_to_key(mycmp):
 
   \>>>
 
-  ```
+  ```python
   >>> students = ['dave', 'john', 'jane']
   >>> newgrades = {'john': 'F', 'jane':'A', 'dave': 'C'}
   >>> sorted(students, key=newgrades.__getitem__)

@@ -99,15 +99,15 @@ sorted_lst = sorted(lst, key=lambda x: x < 0)
 print(sorted_lst)
 ```
 上述代码分为两部分，第一部分的`key=lambda x: x < 0`意为：当x < 0时，返回的key为False，其bool值为0，反之为1，因此上述lst的全部key如下方左侧所示，其中返回False的在返回Ture前面，即最终排序将变成下方右侧形式：
-
-`[1, -2, 3, 0, -1, 2, -3]`  `[1, 3, 0, 2, -2, -1, -3]`<br>
-`[0   1  0  0   1  0   1]`  `[0  0  0  0   1   1   1]`
-
+```
+[1, -2, 3, 0, -1, 2, -3]  [1, 3, 0, 2, -2, -1, -3]
+[0   1  0  0   1  0   1]  [0  0  0  0   1   1   1]
+```
 第二部分的`abs(x)`意为：返回绝对值，按照绝对值顺序排队，从而排序完成：：
-
-`[1, 3, 0, 2, -2, -1, -3]`  `[0, 1, 2, 3, -1, -2, -3]`<br>
-`[1  3  0  2   2   1   3]`  `[0  1  2  3   1   2   3]`
-
+```
+[1, 3, 0, 2, -2, -1, -3]  [0, 1, 2, 3, -1, -2, -3]
+[1  3  0  2   2   1   3]  [0  1  2  3   1   2   3]
+```
 ## Operator 模块函数
 
 上面显示的键函数模式非常常见，因此 Python 提供了便利功能，使访问器功能更容易，更快捷。  [`operator`](https://docs.python.org/zh-cn/3/library/operator.html#module-operator) 模块有 [`itemgetter()`](https://docs.python.org/zh-cn/3/library/operator.html#operator.itemgetter) 、 [`attrgetter()`](https://docs.python.org/zh-cn/3/library/operator.html#operator.attrgetter) 和 [`methodcaller()`](https://docs.python.org/zh-cn/3/library/operator.html#operator.methodcaller) 函数。

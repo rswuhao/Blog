@@ -90,9 +90,11 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 
 **下面这个例子能更加直观的表现出使用key关键字的在sorted函数中的应用：**
 对一个数列排序，要求如下：
+
 * 正数在前，负数在后
 * 正数从小到大
 * 负数从大到小
+
 ```python
 >>> lst = [1, -2, 3, 0, -1, 2, -3]
 >>> sorted_lst = sorted(lst, key=lambda x: (x < 0, abs(x)))
@@ -100,16 +102,20 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 [0, 1, 2, 3, -1, -2, -3]
 
 ```
+
 上述代码分为两部分，第一部分的`key=lambda x: x < 0`意为：当x < 0时，返回的key为False，其bool值为0，反之为1，因此上述lst的全部key如下方左侧所示，其中返回False的在返回Ture前面，即最终排序将变成下方右侧形式：
+
 ```
 [1, -2, 3, 0, -1, 2, -3]  [1, 3, 0, 2, -2, -1, -3]
 [0   1  0  0   1  0   1]  [0  0  0  0   1   1   1]
 ```
+
 第二部分的`abs(x)`意为：返回绝对值，按照绝对值顺序排队，从而排序完成：：
+
 ```
-[1, 3, 0, 2, -2, -1, -3]  [0, 1, 2, 3, -1, -2, -3]
-[1  3  0  2   2   1   3]  [0  1  2  3   1   2   3]
+[1, 3, 0, 2, -2, -1, -3]  [0, 1, 2, 3, -1, -2, -3][1  3  0  2   2   1   3]  [0  1  2  3   1   2   3]
 ```
+
 ## Operator 模块函数
 
 上面显示的键函数模式非常常见，因此 Python 提供了便利功能，使访问器功能更容易，更快捷。  [`operator`](https://docs.python.org/zh-cn/3/library/operator.html#module-operator) 模块有 [`itemgetter()`](https://docs.python.org/zh-cn/3/library/operator.html#operator.itemgetter) 、 [`attrgetter()`](https://docs.python.org/zh-cn/3/library/operator.html#operator.attrgetter) 和 [`methodcaller()`](https://docs.python.org/zh-cn/3/library/operator.html#operator.methodcaller) 函数。
@@ -119,13 +125,7 @@ Python 列表有一个内置的 [`list.sort()`](https://docs.python.org/zh-cn/3/
 \>>>
 
 ```python
->>> from operator import itemgetter, attrgetter
-
->>> sorted(student_tuples, key=itemgetter(2))
-[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
-
->>> sorted(student_objects, key=attrgetter('age'))
-[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
+>>> from operator import itemgetter, attrgetter>>> sorted(student_tuples, key=itemgetter(2))[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]>>> sorted(student_objects, key=attrgetter('age'))[('dave', 'B', 10), ('jane', 'B', 12), ('john', 'A', 15)]
 ```
 
 Operator 模块功能允许多级排序。 例如，按 *grade* 排序，然后按 *age* 排序：
@@ -133,11 +133,7 @@ Operator 模块功能允许多级排序。 例如，按 *grade* 排序，然后�
 \>>>
 
 ```python
->>> sorted(student_tuples, key=itemgetter(1,2))
-[('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]
-
->>> sorted(student_objects, key=attrgetter('grade', 'age'))
-[('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]
+>>> sorted(student_tuples, key=itemgetter(1,2))[('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]>>> sorted(student_objects, key=attrgetter('grade', 'age'))[('john', 'A', 15), ('dave', 'B', 10), ('jane', 'B', 12)]
 ```
 
 ## 升序和降序
@@ -147,11 +143,7 @@ Operator 模块功能允许多级排序。 例如，按 *grade* 排序，然后�
 \>>>
 
 ```
->>> sorted(student_tuples, key=itemgetter(2), reverse=True)
-[('john', 'A', 15), ('jane', 'B', 12), ('dave', 'B', 10)]
-
->>> sorted(student_objects, key=attrgetter('age'), reverse=True)
-[('john', 'A', 15), ('jane', 'B', 12), ('dave', 'B', 10)]
+>>> sorted(student_tuples, key=itemgetter(2), reverse=True)[('john', 'A', 15), ('jane', 'B', 12), ('dave', 'B', 10)]>>> sorted(student_objects, key=attrgetter('age'), reverse=True)[('john', 'A', 15), ('jane', 'B', 12), ('dave', 'B', 10)]
 ```
 
 ## 排序稳定性和排序复杂度
@@ -161,9 +153,7 @@ Operator 模块功能允许多级排序。 例如，按 *grade* 排序，然后�
 \>>>
 
 ```python
->>> data = [('red', 1), ('blue', 1), ('red', 2), ('blue', 2)]
->>> sorted(data, key=itemgetter(0))
-[('blue', 1), ('blue', 2), ('red', 1), ('red', 2)]
+>>> data = [('red', 1), ('blue', 1), ('red', 2), ('blue', 2)]>>> sorted(data, key=itemgetter(0))[('blue', 1), ('blue', 2), ('red', 1), ('red', 2)]
 ```
 
 注意 *blue* 的两个记录如何保留它们的原始顺序，以便 `('blue', 1)` 保证在 `('blue', 2)` 之前。
@@ -204,12 +194,10 @@ Python 中使用的 [Timsort](https://en.wikipedia.org/wiki/Timsort) 算法可�
 
 例如，要使用DSU方法按 *grade* 对学生数据进行排序：
 
-\>>>
-
 ```python
-decorated = [(student.grade, i, student) for i, student in enumerate(student_objects)]
-decorated.sort()
-[student for grade, i, student in decorated]               # undecorate
+>>> decorated = [(student.grade, i, student) for i, student in enumerate(student_objects)]
+>>> decorated.sort()
+>>> [student for grade, i, student in decorated]               # undecorate
 [('john', 'A', 15), ('jane', 'B', 12), ('dave', 'B', 10)]
 ```
 
@@ -323,4 +311,3 @@ def cmp_to_key(mycmp):
   >>> sorted(students, key=newgrades.__getitem__)
   ['jane', 'dave', 'john']
   ```
-
